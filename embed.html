@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Snake Embed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="embed-body">
+
+    <!-- Standalone Canvas Wrapper -->
+    <div class="snake-embed-container">
+        
+        <!-- Floating Telemetry HUD inside canvas wrapper -->
+        <div class="embed-hud">
+            <div class="hud-left">
+                <span>PILOT: <strong id="hudPlayerName">ANON</strong></span>
+                <span>SPEED: <strong id="hudSpeed">1.0x</strong></span>
+            </div>
+            <div class="hud-right">
+                <span>SCORE: <strong id="score">0</strong></span>
+                <span>RECORD: <strong id="highScore">0</strong></span>
+            </div>
+        </div>
+
+        <!-- Dynamic Responsive Canvas Stage -->
+        <div class="canvas-stage" id="canvasStage">
+            <canvas id="gameCanvas"></canvas>
+            
+            <!-- Launch / Pause / End Overlay -->
+            <div id="messageOverlay" class="embed-overlay">
+                <div class="overlay-modal">
+                    <h2 id="overlayTitle">NEON SNAKE</h2>
+
+                    <!-- Initial Setup Form -->
+                    <div id="setupForm" class="setup-grid">
+                        <div class="form-group">
+                            <label for="playerNameInput">PILOT NAME</label>
+                            <input type="text" id="playerNameInput" value="ANON" maxlength="12">
+                        </div>
+
+                        <div class="form-group">
+                            <label>BOARD SIZE</label>
+                            <div class="btn-group">
+                                <button type="button" class="grid-size-btn" data-size="big">BIG</button>
+                                <button type="button" class="grid-size-btn active" data-size="small">SMALL</button>
+                                <button type="button" class="grid-size-btn" data-size="tiny">TINY</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>DIFFICULTY</label>
+                            <div class="btn-group">
+                                <button type="button" class="diff-btn" data-diff="slow">SLOW</button>
+                                <button type="button" class="diff-btn active" data-diff="normal">NORMAL</button>
+                                <button type="button" class="diff-btn" data-diff="fast">FAST</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="overlayActionBtn" class="action-btn">ENGAGE RUN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

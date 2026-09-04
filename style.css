@@ -1,61 +1,192 @@
-html, body {
-    height: 100%;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body.embed-body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: transparent;
+    color: #e0e0e0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 
-body {
-    font-family: 'Orbitron', sans-serif;
-    color: #e0e0e0;
-    background-color: #08090d;
-    /* Clean dark ambient grid background */
-    background-image: 
-        radial-gradient(ellipse at 50% 20%, rgba(0, 191, 255, 0.07) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 90%, rgba(255, 0, 128, 0.05) 0%, transparent 50%),
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+/* Master Wrapper: Fills container width up to 100% and scales smoothly */
+.snake-embed-container {
+    width: 100%;
+    max-width: 600px; /* Adjust maximum desktop size as desired */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    margin: 0 auto;
 }
 
-.neon-text {
-    text-shadow:
-        0 0 4px rgba(0, 191, 255, 0.7),
-        0 0 12px rgba(0, 191, 255, 0.4);
+/* Telemetry Ribbon */
+.embed-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8, 9, 13, 0.85);
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.05em;
 }
 
-.neon-border {
-    border: 1px solid rgba(0, 191, 255, 0.45);
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.12), inset 0 0 10px rgba(0, 191, 255, 0.06);
+.embed-hud span {
+    color: #888;
+    margin-right: 10px;
 }
 
-.neon-button {
-    transition: all 0.2s ease;
-    text-shadow: 0 0 4px rgba(255, 0, 255, 0.6);
+.embed-hud strong {
+    color: #00e5ff;
 }
 
-.neon-button:hover {
-    background-color: #ff00ff;
-    color: #0d0d0d;
-    box-shadow: 0 0 12px rgba(255, 0, 255, 0.5);
-    text-shadow: none;
+/* Responsive Square Stage */
+#canvasStage {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
-canvas {
+#gameCanvas {
     background-color: #06070a;
+    border: 1px solid rgba(0, 191, 255, 0.45);
+    box-shadow: 0 0 14px rgba(0, 191, 255, 0.15), inset 0 0 8px rgba(0, 191, 255, 0.05);
     cursor: crosshair;
 }
 
-#leaderboardList::-webkit-scrollbar,
-.overflow-y-auto::-webkit-scrollbar {
-    width: 3px;
+canvas {
+    display: block;
+    cursor: crosshair;
 }
-#leaderboardList::-webkit-scrollbar-thumb,
-.overflow-y-auto::-webkit-scrollbar-thumb {
-    background: rgba(0, 191, 255, 0.3);
-    border-radius: 2px;
+
+/* Fullscreen Centered Overlay */
+.embed-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    padding: 16px;
+    z-index: 10;
 }
-#leaderboardList::-webkit-scrollbar-thumb:hover,
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 191, 255, 0.6);
+
+.embed-overlay.hidden {
+    display: none !important;
+}
+
+.overlay-modal {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+#overlayTitle {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.8);
+    text-align: center;
+}
+
+.setup-grid {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(15, 17, 25, 0.8);
+    border: 1px solid rgba(0, 191, 255, 0.25);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    color: #ff007f;
+    font-weight: bold;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+}
+
+.form-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 0, 127, 0.4);
+    color: #fff;
+    font-family: inherit;
+    padding: 4px 8px;
+    border-radius: 4px;
+    outline: none;
+    font-size: 12px;
+}
+
+.btn-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.grid-size-btn, .diff-btn {
+    background: transparent;
+    border: 1px solid rgba(0, 191, 255, 0.3);
+    color: #00e5ff;
+    font-family: inherit;
+    font-size: 10px;
+    padding: 5px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.grid-size-btn.active {
+    background: #00e5ff;
+    color: #000;
+    font-weight: bold;
+}
+
+.diff-btn.active {
+    background: #ff007f;
+    border-color: #ff007f;
+    color: #000;
+    font-weight: bold;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 10px 0;
+    background: transparent;
+    border: 1px solid #ff007f;
+    color: #ff007f;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: #ff007f;
+    color: #000;
 }
